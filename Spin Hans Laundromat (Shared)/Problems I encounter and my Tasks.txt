@@ -1,0 +1,77 @@
+PROBLEMS:				STATUS:
+
+1. Website's head icon doesn't change.		SOLVED!
+2. User's limited operations on website.		SOLVED!
+
+
+TASKS FOR TODAY
+
+1. Sidebar Transformation			DONE!
+2. Log-in Page				DONE!
+3. Change Terms of "User Permissions" to 		DONE!
+"User Groups"
+4. User groups are System Administrator, 		DONE!
+Manager, and Receptionist.
+5. Dark Theme Mode				DONE!
+6. Website Customization 
+(Change the bg color of website using settings)	DONE!
+7. UI Design				DONE!
+
+
+
+Requests:
+
+1. Notifications				(OPTIONAL)
+
+2. Receipt					DONE!
+
+3. Lack of Presentation in Reports		DONE!
+4. Change Terms of "Order Management" to 
+"Laundry Management"			DONE!
+5. Laundry Management (Calculations)		DONE!
+
+
+
+
+Admin Account:
+
+admin@sample.com
+password: a**in
+
+
+
+COLOR PALETTES:
+1. 1474BC
+2. 57A0D7
+3. F1B712
+4. DA2915
+5. FFFFFF
+
+
+DARK THEME 
+(Background)
+.header
+.page-titles
+.container-fluid
+.card
+.footer
+
+(Text)
+.text-primary (bootstrap.min.css)
+.page-titles .breadcrumb
+thead tr th
+tbody tr td
+.footer
+
+
+
+.page-wrapper
+#E7E7E7
+#18191A
+
+
+
+
+
+
+
