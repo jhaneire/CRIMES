@@ -73,6 +73,7 @@
                     while($row = $result->fetch_assoc())
                     {
                       // $sql1 = "SELECT * FROM `service` where id='".$row['sname']."'" ;
+                      // $sql1 = "SELECT * FROM `service` where id='".$row['sname']."'" ;
                       // $result1 = $conn->query($sql1);
                       // $row1 = $result1->fetch_assoc();
                       $sql2 = "SELECT * FROM `cases` where id='".$row['fname']."'";
