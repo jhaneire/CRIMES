@@ -1,187 +1,121 @@
 <?php include('head.php');?>
 <?php include('header.php');?>
 <?php include('sidebar.php');
-
-
-
-if(isset($_GET['id']))
-{ ?>
-
-
-
-
-<div class="popup popup--icon -question js_question-popup popup--visible">
-<div class="popup__background"></div>
-<div class="popup__content">
-<h3 class="popup__content__title">
-Sure
-</h1>
-<p>Are You Sure To Delete This Record?</p>
-<p>
-<a href="del_order.php?id=<?php echo $_GET['id']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
-<a href="view_order.php" class="button button--error" data-for="js_success-popup">No</a>
-</p>
-</div>
-</div>
+  if(isset($_GET['id']))
+  { ?>
+    <div class="popup popup--icon -question js_question-popup popup--visible">
+      <div class="popup__background">
+      </div>
+        <div class="popup__content">
+          <h3 class="popup__content__title">
+          Sure
+          </h1>
+            <p>Are You Sure To Delete This Record?</p>
+            <p>
+              <a href="del_order.php?id=<?php echo $_GET['id']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
+              <a href="view_order.php" class="button button--error" data-for="js_success-popup">No</a>
+            </p>
+        </div>
+    </div>
 <?php } ?>
 
 
 
 <!-- Page wrapper  -->
 <div class="page-wrapper">
-<!-- Bread crumb -->
-<div class="row page-titles">
-<div class="col-md-5 align-self-center">
-<h3 class="text-primary"> Laundry List</h3> </div>
-<div class="col-md-7 align-self-center">
-<ol class="breadcrumb">
-<li class="breadcrumb-item"><a href="index.php">Home</a></li>
-<li class="breadcrumb-item active">Laundry Management</li>
-</ol>
-</div>
-</div>
-<!-- End Bread crumb -->
-<!-- Container fluid  -->
-<div class="container-fluid-3">
-<!-- Start Page Content -->
+  <!-- Bread crumb -->
+  <div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+      <h3 class="text-primary"> Cases List</h3> 
+    </div>
+        <div class="col-md-7 align-self-center">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+            <li class="breadcrumb-item active">Case Management</li>
+          </ol>
+        </div>
+  </div>
+    <!-- End Bread crumb -->
+    <!-- Container fluid  -->
+    <div class="container-fluid-3">
+      <!-- Start Page Content -->
+      <!-- /# row -->
+      <div class="card-3">
+        <div class="card-body">
+	        <?php if(isset($useroles)){  if(in_array("add_order",$useroles)){ ?> 
+            <a href="add_order.php"><button class="btn btn-primary">Add Laundry</button></a>
+            <a href="receipt.php"><button class="btn btn-primary">Print Receipt</button></a>
+          <?php } } ?>
+          <div class="table-responsive m-t-40">
+            <table id="myTable" class="table table-bordered table-striped"  data-toggle="table" >
+              <thead>
+                <tr>
+                  <th>	Reporter Role</th>
+                  <th>	CASE NO.</th>
+                  <th>	Complainant Name</th>
+                  <th>	Contact (No. & Email)</th>
+                  <th>	Location</th>
+                  <th>	Barangay</th>
+                  <th>	Type of Report|Complaint|Case	</th>
+                  <th>	Description</th>
+                  <th>	Date Filed</th>
+                  <th>	Status</th>
+                  <th>	Action</th>
 
-<!-- /# row -->
-<div class="card-3">
+                  
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <?php include 'connect.php';
+                  $sql = "SELECT * FROM `cases`";
+                  $result = $conn->query($sql);
+                    while($row = $result->fetch_assoc())
+                    {
+                      // $sql1 = "SELECT * FROM `service` where id='".$row['sname']."'" ;
+                      // $result1 = $conn->query($sql1);
+                      // $row1 = $result1->fetch_assoc();
+                      $sql2 = "SELECT * FROM `cases` where id='".$row['fname']."'";
+                      $result2 = $conn->query($sql2);
+                      $row2 = $result2->fetch_assoc();
+                ?>
+                      <tr>
+                        <td><?php echo $row['fname']; ?></td><!-- this must check the admin for the group_id then check the id to what position -->
+                        <td>0<?php echo $row['id']; ?></td> <!-- salt+id -->
+                        <td><?php echo $row['fname']; ?></td> 
+                        <td><?php echo $row['contact']; ?></td> <!-- this must check the admin for the account id then check the contact <td><?php echo $row['email']; ?></td> -->
+                        <td><?php echo $row['location']; ?></td>
+                        <td><?php echo $row['barangay']; ?></td>
+                        <td><?php echo $row['type']; ?></td>
+                        <td><?php echo $row['description']; ?></td>
+                        <td><?php echo $row['date']; ?></td>
+                        
+                        <!--STATUS-->
+                        <?php 
+                          if ($row['delivery_status']==0) { ?>
+                            <td>Pending</td>
+                        <?php }
+                          else{ ?>
+                          <td>Completed</td>
+                        <?php }?>
+                        <td>
+                          <?php if ($row['delivery_status']==0) {?>
+                            <a href="complete_order.php?id=<?=$row['id'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-exchange"></i></button></a>
+                          <?php }?>
 
-<div class="card-body">
+                          <?php if(isset($useroles)){  if(in_array("edit_order",$useroles)){ ?> 
+                            <a href="edit_order.php?id=<?=$row['id'];?>"><button type="button" class="btn btn-xs btn-primary" ><i class="fa fa-pencil"></i></button></a>
+                          <?php } } ?>
 
-	<?php if(isset($useroles)){  if(in_array("add_order",$useroles)){ ?> 
-
-		<a href="add_order.php"><button class="btn btn-primary">Add Laundry</button></a>
-    <a href="receipt.php"><button class="btn btn-primary">Print Receipt</button></a>
-
-<?php } } ?>
-
-<div class="table-responsive m-t-40">
-<table id="myTable" class="table table-bordered table-striped"  data-toggle="table" >
-<thead>
-<tr>
-
-
-<th>	ORDER SLIP NO.	<br></th>
-<th>	Client Name 	<br></th>
-<th>	MONTH			<br></th>
-<th>	Week			<br></th>
-<th>	Pickup Date		<br></th>
-<th>	Delivery Date	<br></th>
-<th>	Linen			<br></th>
-<th>	Towel			<br></th>
-<th>	Pillowcase		<br></th>
-<th>	Robe			<br></th>
-<th>	Rug				<br></th>
-<th>	Face Towel		<br></th>
-<th>	Pillow			<br></th>
-<th>	Weight(KG)		<br></th>
-<th>	Delivery Fee 	<br></th>
-<th>	Total(PHP):		<br></th>
-<th>	Status			<br></th>
-<th>	Action 			<br></th>
-
-
-</tr>
-</thead>
-<tbody>
-
-
-
-
-<?php 
-include 'connect.php';
-$sql = "SELECT * FROM `order`";
-$result = $conn->query($sql);
-
-
-
-
-while($row = $result->fetch_assoc())
-{
-
-
-$sql1 = "SELECT * FROM `service` where id='".$row['sname']."'" ;
-$result1 = $conn->query($sql1);
-$row1 = $result1->fetch_assoc();
-
-$sql2 = "SELECT * FROM `customer` where 
-id='".$row['fname']."'";
-$result2 = $conn->query($sql2);
-$row2 = $result2->fetch_assoc();
-
-
-
-
-
-
-
-?>
-<tr>
-
-<td>0<?php echo $row['id']; ?></td>
-<td><?php echo $row2['fname']; ?></td>
-<td><?php echo $row['month']; ?></td>
-<td><?php echo $row['week']; ?></td>
-<td><?php echo $row['todays_date']; ?></td>
-<td><?php echo $row['delivery_date']; ?></td>
-<td><?php echo $row['linen']; ?></td>
-<td><?php echo $row['towel']; ?></td>
-<td><?php echo $row['pillowcase']; ?></td>
-<td><?php echo $row['robe']; ?></td>
-<td><?php echo $row['rug']; ?></td>
-<td><?php echo $row['facetowel']; ?></td>
-<td><?php echo $row['pillow']; ?></td>
-<td><?php echo $row['weight']; ?></td>
-<td><?php echo $row['prizes']; ?></td>
-<td><?php echo $row['total']; ?></td>
-
-<?php if ($row['delivery_status']==0) {
-?>
-<td>Pending</td>
-<?php } 
-else{
-
-?>
-<td>Completed</td>
-<?php }?>
-<td>
-<?php if ($row['delivery_status']==0) {
-?>
-
-
-
-<a href="complete_order.php?id=<?=$row['id'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-exchange"></i></button></a>
-<?php }?>
-
-
-<?php if(isset($useroles)){  if(in_array("edit_order",$useroles)){ ?> 
-<a href="edit_order.php?id=<?=$row['id'];?>"><button type="button" class="btn btn-xs btn-primary" ><i class="fa fa-pencil"></i></button></a>
-<?php } } ?>
-
-<?php if(isset($useroles)){  if(in_array("delete_order",$useroles)){ ?> 
-<a href="view_order.php?id=<?=$row['id'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-trash"></i></button></a>
-<?php } } ?>
-
-
-<!-- <a href="assign_role.php?id=<?=$row['id'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-pay"></i></button></a> -->
-
-</td>
-</tr>
-<?php
-
- } ?>
-
-</tbody>
-<tfoot>
-  <tr>
-    <th colspan="15" style="text-align:right">TOTAL:</th>
-    <th></th>
-    <th></th>
-  </tr>
-</tfoot>
-</table>
+                          <?php if(isset($useroles)){  if(in_array("delete_order",$useroles)){ ?> 
+                            <a href="view_order.php?id=<?=$row['id'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-trash"></i></button></a>
+                          <?php } } ?>
+                          <!-- <a href="assign_role.php?id=<?=$row['id'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-pay"></i></button></a> -->
+                        </td>
+                      </tr>
+                    <?php } ?>
+              </tbody>
+            </table>
 
 
 
@@ -201,7 +135,6 @@ else{
     });
   });
   </script>
-
 <script>
   $('#myTable').DataTable({
     footerCallback: myFooterCallback
@@ -211,10 +144,7 @@ else{
 </div>
 </div>
 </div>
-
-
 <?php include('footer.php');?>
-
 
 
 <link rel="stylesheet" href="popup_style.css">
@@ -277,7 +207,7 @@ $(document).ready(function() {
       [10, 25, 50, -1],
       [10, 25, 50, "All"]
     ],
-    "dom": 'Bfrtip',
+    "dom": 'lBfrtip',
     "buttons": [
       {
         "extend": 'pdfHtml5',
@@ -304,7 +234,7 @@ $(document).ready(function() {
  
       // Total over all pages
       total = api
-        .column( 15 )
+        .column( 5 )
         .data()
         .reduce( function (a, b) {
           return intVal(a) + intVal(b);
@@ -312,15 +242,15 @@ $(document).ready(function() {
 
       // Total over this page
 		  pageTotal = api
-		  .column( 15, { page: 'current'} )
+		  .column( 5, { page: 'current'} )
 		  .data()
 		  .reduce( function (a, b) {
 			  return intVal(a) + intVal(b);
 		  }, 0 );
 
-		  // Update footer
-		  $( api.column( 15 ).footer() ).html('₱'+pageTotal);
-		  $( api.column( 16 ).footer() ).html('₱'+ total +' total)');
+		  // // Update footer
+		  // $( api.column( 15 ).footer() ).html('₱'+pageTotal);
+		  // $( api.column( 16 ).footer() ).html('₱'+ total +' total)');
       },
   });
 });

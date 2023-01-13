@@ -27,7 +27,7 @@
 
  <script src="js/lib/sweetalert/sweetalert.min.js"></script>
     <!-- scripit init-->
-    <script src="js/lib/sweetalert/sweetalert.init.js"></script>
+    <!-- <script src="js/lib/sweetalert/sweetalert.init.js"></script> -->
    <!--  <script src="js/lib/datamap/d3.min.js"></script>
     <script src="js/lib/datamap/topojson.js"></script>
     <script src="js/lib/datamap/datamaps.world.min.js"></script>

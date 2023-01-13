@@ -59,7 +59,7 @@
                         <li><a href="{{ route('contact') }}">Contact</a></li>
                         <li><a href="#">Report a Crime</a></li>
                         <li class="nav-item">
-                            <a class="nav-link" href="crime/login.php">Login</a>
+                            <a class="nav-link" href="login.php">Login</a>
                         </li>
                     
                         <!-- <p>You do not have permission to view this page.</p> -->

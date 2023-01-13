@@ -1,8 +1,8 @@
 
 <?php include('head.php');?>
 
-
-
+<?php include('header.php');?>
+<?php include('sidebar.php');?>
 
  <?php
  include('connect.php');
@@ -44,20 +44,20 @@ window.location="view_user.php";
 ?>
 
 <?php
-$que="select * from admin where id='".$_GET["id"]."'"; // kinuha lahat ng details 
+$que="select * from admin where id='".$_GET["id"]."'";
 $query=$conn->query($que);
 while($row=mysqli_fetch_array($query))
 {
     //print_r($row);
     extract($row);
 $fname = $row['fname'];
-// $lname = $row['lname'];
+$lname = $row['lname'];
 $email = $row['email'];
-// $address = $row['address'];
-// $gender = $row['gender'];
-// $contact = $row['contact'];
-// $dob = $row['dob'];
-// $image = $row['image'];
+$address = $row['address'];
+$gender = $row['gender'];
+$contact = $row['contact'];
+$dob = $row['dob'];
+$image = $row['image'];
 }
 
 ?> 
@@ -125,6 +125,11 @@ $email = $row['email'];
                                         </div>
                                         
 
+
+
+
+
+
                                           <div class="form-group">
                                             <div class="row">
                                                 <label class="col-sm-3 control-label">Gender</label>
@@ -191,7 +196,5 @@ $email = $row['email'];
                 <!-- End PAge Content -->
     
 
-
-<!--  Author Name: Nikhil Bhalerao - www.nikhilbhalerao.com 
-PHP, Laravel and Codeignitor Developer -->
+<?php include('footer.php');?>
 

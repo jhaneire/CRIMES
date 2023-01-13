@@ -42,16 +42,16 @@ if(isset($_GET['id'])){ ?>
               <div class="card-body">
                 <?php if(isset($useroles)){  if(in_array("add_user",$useroles)){ ?> 
                     <a href="add_user.php"><button class="btn btn-primary">Add User</button></a>
+                <?php } } ?>
                 <button id="pencil" type="button" class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#myModal">
                   <i class="fa fa-pencil"> Edit User</i>
-                </button><?php } } ?>
+                </button>
                   <div class="table-responsive m-t-40">
                     <table id="myTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
                         <th>ID #</th>
                         <th>Fullname</th>
-                        <th>Contact</th>
                         <th>Email</th>
                         <th>Given Role</th>
                         <th>Action</th>
@@ -70,7 +70,6 @@ if(isset($_GET['id'])){ ?>
                               <tr>
                                 <td><?php echo $row['id']; ?></td>
                                 <td><?php echo $row['fname']; ?></td>
-                                <td><?php echo $row['contact']; ?></td>
                                 <td><?php echo $row['email']; ?></td>
                                 <td><?php echo ISSET($row1['name']) ? $row1['name'] : "N/A"; ?></td>
                                 <td>
@@ -107,64 +106,24 @@ if(isset($_GET['id'])){ ?>
                               <div class="modal-body">
                                 <!-- andito yung form id -->
                                 <form class="form-horizontal" method="POST" enctype="multipart/form-data" name="image_form" id="image_form" action="update_user.php">
-                                    <!-- <div class="input-group mb-3">
+                                    <div class="input-group mb-3">
                                       <div class="input-group-prepend"> 
                                       <span class="input-group-text">ID</span>
                                       </div>
-                                      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="ID" id="id"name="id"require>
-                                    </div> -->
-                                    <div class="form-group">
-                                        <div class="row">
-                                          <label class="col-sm-3 control-label">ID</label> 
-                                          <div class="col-sm-9">
-                                            <input type="text"  class="form-control" placeholder="ID" id="id" name="id"  required="">
-                                          </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="row">
-                                          <label class="col-sm-3 control-label">FullName</label> 
-                                          <div class="col-sm-9">
-                                            <input type="text" name="fname" class="form-control" placeholder="Full Name" id="fname"name="fname"  required="">
-                                          </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <div class="row">
-                                        <label class="col-sm-3 control-label">Contact</label> 
-                                          <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="Contact Number" id="contact" name="contact" minlength="10" maxlength="11" onkeypress="javascript:return isNumber(event)" required="">
-                                          </div>
-                                          <p id="error" class="text-danger"></p>
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <div class="row">
-                                          <label class="col-sm-3 control-label">Email</label>
-                                          <div class="col-sm-9">
-                                              <input type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  placeholder="Email" id="email" name="email"required>
-                                          </div>
-                                      </div>
-                                    </div>
-                                    <!-- <div class="input-group mb-3">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroup-sizing-default">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                      </div>
-                                      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Fullname" id="fname"name="fname"require>
+                                      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="ID" id="id"name="id">
                                     </div>
                                     <div class="input-group mb-3">
                                       <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroup-sizing-default">&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                       </div>
-                                      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Contact Number" id="contact"name="contact"require>
+                                      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Fullname" id="fname"name="fname">
                                     </div>
                                     <div class="input-group mb-3">
                                       <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroup-sizing-default">&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                       </div>
-                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="email" id="email" name="email"require>
-                                    </div> -->
+                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="email" id="email" name="email">
+                                    </div>
                                 
                                     <div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

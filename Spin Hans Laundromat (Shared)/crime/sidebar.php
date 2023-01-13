@@ -33,11 +33,24 @@
 
 
                         <li class="nav-devider"></li>
-                        <li class="nav-label">Home</li>
-                        <li> <a href="index.php" aria-expanded="false"><i class="fa fa-tachometer"></i>Dashboard</a></li>
+                        <li class="nav-label"><a href="index.html">Home</a></li>
+                        <li> 
+                            <a href="index.php" aria-expanded="false">
+                                <i class="fa fa-tachometer">
+                                    <span class="hide-menu">Dashboard
+                                    </span>
+                                </i>
+                            </a>
+                        </li>
                         <li class="nav-label">Management and Reports</li>
                         <?php if(isset($useroles)){  if(in_array("manage_user",$useroles)){ ?> 
-                            <li> <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-user-plus"></i><span class="hide-menu">Account Registration</span></a>
+                            <li> 
+                                <a class="has-arrow" href="#" aria-expanded="false">
+                                    <i class="fa fa-user-plus">
+                                        <span class="hide-menu">Account Registration
+                                        </span>
+                                    </i>
+                                </a>
                                 <ul aria-expanded="false" class="collapse">
                                     <?php if(isset($useroles)){  if(in_array("add_user",$useroles)){ ?> 
                                         <!-- <li><a href="add_user.php">Add User</a></li> -->
@@ -47,6 +60,15 @@
                             </li>
                         <?php } } ?>
 
+                        <?php if($_SESSION["username"]=='admin' || $_SESSION["username"]=='user') 
+         { ?>
+                         <li> <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-inr"></i><span class="hide-menu">Case Management</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="add_order.php">Report</a></li>
+                               <li><a href="view_order.php">Manage Laundry List</a></li>
+                            </ul>
+                        </li>
+                    <?php }?>
                        
                         <?php if($_SESSION["username"]=='admin') { ?>
                         <li> <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-shield"></i><span class="hide-menu">Role Management</span></a>
@@ -71,15 +93,7 @@
 
 
 
-     <?php if($_SESSION["username"]=='admin' || $_SESSION["username"]=='user') 
-         { ?>
-                         <li> <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-inr"></i><span class="hide-menu">Laundry Management</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="add_order.php">Add Laundry</a></li>
-                               <li><a href="view_order.php">Manage Laundry List</a></li>
-                            </ul>
-                        </li>
-                    <?php }?>
+
 
 
 

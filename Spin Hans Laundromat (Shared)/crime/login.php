@@ -4,8 +4,7 @@
 
    <?php
   include('connect.php');
-if(isset($_POST['btn_login']))
-{
+if(isset($_POST['btn_login'])){
 $unm = $_POST['email'];
 //echo $_POST['passwd'];
 //$p="admin";
@@ -19,65 +18,44 @@ function createSalt()
 $salt = createSalt();
 $pass = hash('sha256', $salt . $passw);
 //echo $pass;
- $sql = "SELECT * FROM admin WHERE email='" .$unm . "' and password = '". $pass."'";
+    $sql = "SELECT * FROM admin WHERE email='" .$unm . "' and password = '". $pass."'";
     $result = mysqli_query($conn,$sql);
-    
-     $count=mysqli_num_rows($result);
-     if($count==1) {
-    {    
+    $count=mysqli_num_rows($result);
+    if($count==1) {
       $row  = mysqli_fetch_array($result);
-    //print_r($row);
-     $_SESSION["id"] = $row['id'];
-     $_SESSION["username"] = $row['username'];
-     $_SESSION["password"] = $row['password'];
-     $_SESSION["email"] = $row['email'];
-     $_SESSION["fname"] = $row['fname'];
-     $_SESSION["lname"] = $row['lname'];
-     $_SESSION["image"] = $row['image'];   
-        ?>
-         <div class="popup popup--icon -success js_success-popup popup--visible">
-  <div class="popup__background"></div>
-  <div class="popup__content">
-    <h3 class="popup__content__title">
-      Success 
-    </h1>
-    <p>Login Successfully</p>
-    <p>
-     <!--  <a href="index.php"><button class="button button--success" data-for="js_success-popup"></button></a> -->
-     <?php echo "<script>setTimeout(\"location.href = 'index.php';\",1500);</script>"; ?>
-    </p>
-  </div>
-</div>
-   <!--   <script>
-     window.location="index.php";
-     </script> -->
-     <?php
-    }
-}
-else {?>
-     <div class="popup popup--icon -error js_error-popup popup--visible">
-  <div class="popup__background"></div>
-  <div class="popup__content">
-    <h3 class="popup__content__title">
-      Error 
-    </h1>
-    <p>Invalid Email or Password</p>
-    <p>
-      <a href="login.php"><button class="button button--error" data-for="js_error-popup">Close</button></a>
-    </p>
-  </div>
-</div>
-       <!--  <script> 
-       // alert("Invalid email or Password!");
-        window.location="login.php";
-        </script> -->
-        <?php
-        //// $message = "Invalid email or Password!";
-         }
-    
-    }
-?>
-
+      // Save user data in session variables
+      $_SESSION["id"] = $row['id'];
+      $_SESSION["username"] = $row['username'];
+      $_SESSION["password"] = $row['password'];
+      $_SESSION["email"] = $row['email'];
+      $_SESSION["fname"] = $row['fname'];
+      if ($row['group_id'] == 1 || $row['group_id'] == 2 || $row['group_id'] == 3) {
+        // Redirect to dashboard page
+        echo '<div class="popup popup--icon -success js_success-popup popup--visible">';
+        echo '<div class="popup__background"></div>';
+        echo '<div class="popup__content">';
+        echo '<h3 class="popup__content__title">success</h1>';
+        echo '<p>Login Successfully</p>';
+        echo '<script type="text/javascript">window.location="index.php";</script>';
+      } else {
+        // Redirect to another page
+        header('Location: report.php');
+      }
+    } else {
+      // Login failed
+      // Show an error message or redirect to the login page
+      echo '<div class="popup popup--icon -error js_error-popup popup--visible">';
+      echo '<div class="popup__background"></div>';
+      echo '<div class="popup__content">';
+      echo '<h3 class="popup__content__title">Error</h1>';
+      echo '<p>Invalid Email or Password</p>';
+      echo '<p>';
+      echo '<a href="login.php"><button class="button button--error" data-for="js_error-popup">Close</button></a>';
+      echo '</p>';
+      echo '</div>';
+      echo '</div>';
+    } 
+}?>
     <!-- Main wrapper  -->
     <div id="main-wrapper">
         <div class="unix-login">
@@ -92,7 +70,8 @@ else {?>
                     <div class="col-lg-4">
                         <div class="login-content card">
                             <div class="login-form">
-                                <center><img src="uploadImage/Logo/<?php echo $row_login['login_logo'];?>" style="width:50%; border-radius: 10px; "></center><br><!-- <h4>Login</h4> -->
+                                <!-- <center><img src="uploadImage/Logo/<?php echo $row_login['login_logo'];?>" style="width:50%; border-radius: 10px; "></center><br> -->
+                                <h4>ACCOUNT LOGIN</h4>
                                 <form method="POST">
                                <div class="form-group">
                                         <label>Email address</label>
@@ -111,7 +90,7 @@ else {?>
                                                 <a href="forgot_password.php">Forgotten Password?</a>
                                            </label>   -->
                                     </div>
-                                    <button type="submit" name="btn_login" class="btn btn-primary btn-flat m-b-30 m-t-30">Sign in</button>
+                                    <button type="submit" name="btn_login" class="btn btn-primary btn-flat m-b-30 m-t-30">Login</button>
                                   <!--   <div class="register-link m-t-15 text-center">
                                         <p>Don't have account ? <a href="#"> Sign Up Here</a></p>
                                     </div> -->
@@ -127,7 +106,7 @@ else {?>
 	
     <!-- End Wrapper -->
     <!-- All Jquery -->
-    <script src="js/lib/jquery/jquery.min.js"></script>
+    <script src="js/lib/jquery/jquery.min.js"></>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="js/lib/bootstrap/js/popper.min.js"></script>
     <script src="js/lib/bootstrap/js/bootstrap.min.js"></script>
