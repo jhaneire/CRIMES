@@ -1,7 +1,6 @@
 <?php 
 include 'connect.php'; // Connect to the database
 
-// Check if the input value already exists in the database
 extract($_POST);
     $error = [];
     if(!$conn){
@@ -11,19 +10,42 @@ extract($_POST);
         return;
     }
     if(isset($contact)){
-    $check = $conn->query("SELECT * FROM `admin` where contact = '{$contact}'". (isset($id) && $id > 0 ? " and id != '{$id}' " : "" ));
+    // Prepare the SQL statement
+    $stmt = $conn->prepare("SELECT * FROM `admin` where contact = ? ".(isset($id) && $id > 0 ? " and id != ? " : "" ));
+    // Bind the parameter to the statement
+    $stmt->bind_param('s', $contact);
+    // If id is set and greater than 0, bind the parameter to the statement
+    if (isset($id) && $id > 0) {
+        $stmt->bind_param('i', $id);
+    }
+    // Execute the statement
+    $stmt->execute();
+    // Store the result
+    $check = $stmt->get_result();
     if($check->num_rows > 0){
         $error['field_name'] = 'contact';
         $error['msg']=" Number already exists";
     }
     }
     if(isset($email)){
-    $check = $conn->query("SELECT * FROM `admin` where email = '{$email}'". (isset($id) && $id > 0 ? " and id != '{$id}' " : "" ));
+    // Prepare the SQL statement
+    $stmt = $conn->prepare("SELECT * FROM `admin` where email = ? ".(isset($id) && $id > 0 ? " and id != ? " : "" ));
+    // Bind the parameter to the statement
+    $stmt->bind_param('s', $email);
+    // If id is set and greater than 0, bind the parameter to the statement
+    if (isset($id) && $id > 0) {
+        $stmt->bind_param('i', $id);
+    }
+    // Execute the statement
+    $stmt->execute();
+    // Store the result
+    $check = $stmt->get_result();
     if($check->num_rows > 0){
         $error['field_name'] = 'email';
         $error['msg']=" Email already exists";
     }
     }
     echo json_encode($error);
+
 
 ?>

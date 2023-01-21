@@ -1,13 +1,9 @@
-<?php session_start();
- include('connect.php');
-    if(!isset($_SESSION["email"])){
-    ?>
-    <script>
-    window.location="index.html";
-    </script>
-    <?php
-    
-} else { 
+<?php 
+    session_start();
+    include('connect.php');
+        if(!isset($_SESSION["email"])){
+        header("Location: indexs.php");
+        }else { 
 
  
     ?>
@@ -16,29 +12,13 @@
         <!-- header header  -->
         <div class="header">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
-                <!-- Logo -->
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="javascript:void(0)">
-                        <!-- Logo icon -->
-                         <?php
-             $sql_header_logo = "select * from manage_website"; 
-             $result_header_logo = $conn->query($sql_header_logo);
-             $row_header_logo = mysqli_fetch_array($result_header_logo);
-             ?>
-                        <b><img src="uploadImage/Logo/<?php echo $row_header_logo['logo'];?>" alt="homepage" class="dark-logo" style="width:100%;height:auto;"/></b>
-                        <!--End Logo icon -->
-                        <!-- Logo text -->
-
-                        <!-- <span><img src="images/logo-text.png" alt="homepage" class="dark-logo" /></span> -->
-                    </a>
-                </div>
-                <!-- End Logo -->
+ 
                 <div class="navbar-collapse">
                     <!-- toggle and nav items -->
                     <ul class="navbar-nav mr-auto mt-md-0">
                         <!-- This is  -->
                         <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted  " href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
-                        <li class="nav-item m-l-10"> <a class="nav-link sidebartoggler hidden-sm-down text-muted  " href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <!-- <li class="nav-item m-l-10"> <a class="nav-link sidebartoggler hidden-sm-down text-muted  " href="javascript:void(0)"><i class="ti-menu"></i></a> </li> -->
                         <!-- Messages -->
 
 
@@ -91,8 +71,14 @@
                                     {
                                       //print_r($row);
                                       extract($row);
-                                      $fname = $row['fname'];
-                                      $email = $row['email'];
+                                    $fname = $row['fname'];
+                                    $email = $row['email'];
+                                    $id = $row['id'];
+                                    $username = $row['username'];
+                                    $contact = $row['contact'];
+                                    $group_id = $row['group_id'];
+
+                                    
                                     }
                                                                     ?>
                                

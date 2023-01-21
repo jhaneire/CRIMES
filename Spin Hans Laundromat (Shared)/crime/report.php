@@ -249,10 +249,6 @@
       <div class="modal-body">
         <!--FORM, WHEN SUBMIT IT GOES HERE-->
         <form class="form-horizontal" method="POST" enctype="multipart/form-data" name="btn_save" id="btn_save" action="pages/save_order.php">
-          <div class="">
-              <label for="fname">Fullname:</label> <!-- dapat alam niya kung sino nag report automatically -->
-              <input type="text" id="fname" name="fname" required><!--THE FORM SUBMITTING THE FOR="", NOT ID OR NAME-->
-            </div>
             <div class="">
               <label for="location">Exact Location:</label>
               <input type="text" id="location" name="location" required>
@@ -272,7 +268,14 @@
                 <option value="wild-animal">Wild animal</option>
               </select>
             </div>
-
+            <div class="">
+              <label for="type">Relation to report:</label>
+              <select id="witnesses" name="witnesses" required>
+                <option value="guilty">Guilty</option>
+                <option value="informant">Informant</option>
+                <option value="family">Family</option>
+              </select>
+            </div>
             <div class="">
               <label for="description">Description of Report:</label>
               <textarea id="description" name="description" required></textarea>

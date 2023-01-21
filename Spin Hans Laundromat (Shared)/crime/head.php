@@ -22,7 +22,7 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     
     
-    
+    <link rel="stylesheet" href="popup_style.css">
     <link href="css/lib/chartist/chartist.min.css" rel="stylesheet">
     <link href="css/lib/owl.carousel.min.css" rel="stylesheet" />
     <link href="css/lib/owl.theme.default.min.css" rel="stylesheet" />

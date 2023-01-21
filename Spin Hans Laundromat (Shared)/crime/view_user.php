@@ -1,23 +1,8 @@
 
 <?php include('head.php');?>
 <?php include('header.php');?>
-<?php include('sidebar.php');
+<?php include('sidebar.php'); ?>
 
-if(isset($_GET['id'])){ ?>
-<div class="popup popup--icon -question js_question-popup popup--visible">
-  <div class="popup__background"></div>
-  <div class="popup__content">
-    <h3 class="popup__content__title">
-      Sure
-    </h1>
-    <p>Are You Sure To Delete This Record?</p>
-    <p>
-      <a href="del_user.php?id=<?php echo $_GET['id']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
-      <a href="view_user.php" class="button button--error" data-for="js_success-popup">No</a>
-    </p>
-  </div>
-</div>
-<?php } ?>
 
 
 
@@ -30,8 +15,8 @@ if(isset($_GET['id'])){ ?>
     <div class="col-md-7 align-self-center">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-        <li class="breadcrumb-item active">User Management</li>
-        <li class="breadcrumb-item active">View Users</li>
+        <li class="breadcrumb-item active">Registration</li>
+        <li class="breadcrumb-item active">User management</li>
       </ol>
     </div>
   </div>
@@ -42,9 +27,7 @@ if(isset($_GET['id'])){ ?>
               <div class="card-body">
                 <?php if(isset($useroles)){  if(in_array("add_user",$useroles)){ ?> 
                     <a href="add_user.php"><button class="btn btn-primary">Add User</button></a>
-                <button id="pencil" type="button" class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#myModal">
-                  <i class="fa fa-pencil"> Edit User</i>
-                </button><?php } } ?>
+                <?php } } ?>
                   <div class="table-responsive m-t-40">
                     <table id="myTable" class="table table-bordered table-striped">
                       <thead>
@@ -54,6 +37,7 @@ if(isset($_GET['id'])){ ?>
                         <th>Contact</th>
                         <th>Email</th>
                         <th>Given Role</th>
+                        <th>Date Created</th>
                         <th>Action</th>
                         </tr>
                       </thead>
@@ -73,12 +57,14 @@ if(isset($_GET['id'])){ ?>
                                 <td><?php echo $row['contact']; ?></td>
                                 <td><?php echo $row['email']; ?></td>
                                 <td><?php echo ISSET($row1['name']) ? $row1['name'] : "N/A"; ?></td>
+                                <td><?php echo $row['created_on']; ?></td>
                                 <td>
                                   <?php if(isset($useroles)){  if(in_array("delete_user",$useroles)){ ?> 
                                             <a href="view_user.php?id=<?=$row['id'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-trash"></i></button></a>
                                   <?php } } ?>
-                                    <!-- <a href="assign_role.php?id=<?=$row['id'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-pay"></i></button></a> -->
+                                    
                                 </td>
+                                
                               </tr>
                             <?php }
                           }else {
@@ -93,102 +79,29 @@ if(isset($_GET['id'])){ ?>
           </div>
       </div><!-- /# row -->
 </div>
-                <!-- End PAge Content -->
-                                <!-- Modal -->
-                                <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-target="#myModal">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title">Update User</h5>
-                                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                  </button>
-                              </div> <!-- end of modal header-->
-                              <div class="modal-body">
-                                <!-- andito yung form id -->
-                                <form class="form-horizontal" method="POST" enctype="multipart/form-data" name="image_form" id="image_form" action="update_user.php">
-                                    <!-- <div class="input-group mb-3">
-                                      <div class="input-group-prepend"> 
-                                      <span class="input-group-text">ID</span>
-                                      </div>
-                                      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="ID" id="id"name="id"require>
-                                    </div> -->
-                                    <div class="form-group">
-                                        <div class="row">
-                                          <label class="col-sm-3 control-label">ID</label> 
-                                          <div class="col-sm-9">
-                                            <input type="text"  class="form-control" placeholder="ID" id="id" name="id"  required="">
-                                          </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="row">
-                                          <label class="col-sm-3 control-label">FullName</label> 
-                                          <div class="col-sm-9">
-                                            <input type="text" name="fname" class="form-control" placeholder="Full Name" id="fname"name="fname"  required="">
-                                          </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <div class="row">
-                                        <label class="col-sm-3 control-label">Contact</label> 
-                                          <div class="col-sm-9">
-                                            <input type="text" class="form-control" placeholder="Contact Number" id="contact" name="contact" minlength="10" maxlength="11" onkeypress="javascript:return isNumber(event)" required="">
-                                          </div>
-                                          <p id="error" class="text-danger"></p>
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <div class="row">
-                                          <label class="col-sm-3 control-label">Email</label>
-                                          <div class="col-sm-9">
-                                              <input type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  placeholder="Email" id="email" name="email"required>
-                                          </div>
-                                      </div>
-                                    </div>
-                                    <!-- <div class="input-group mb-3">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroup-sizing-default">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                      </div>
-                                      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Fullname" id="fname"name="fname"require>
-                                    </div>
-                                    <div class="input-group mb-3">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroup-sizing-default">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                      </div>
-                                      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Contact Number" id="contact"name="contact"require>
-                                    </div>
-                                    <div class="input-group mb-3">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroup-sizing-default">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                      </div>
-                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="email" id="email" name="email"require>
-                                    </div> -->
-                                
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button
-                                              type="submit"
-                                              name="update_data_btn"
-                                              class="btn btn-primary"
-                                              id="btnUpdate"
-                                              data-title="<?php echo $id; ?>"
-                                              data-id="">Update Data 
-                                            </button>
-                                    </div><!-- end of modal footer-->
-                                </form>
-                              </div><!-- end of modal BODY-->
-                            </div>
-                          </div>
-                        </div><?php?>
-                        <!-- END Modal and Update button -->   
-
+               
 <?php include('footer.php');?>
 
 
 
 <link rel="stylesheet" href="popup_style.css">
+
+<?php if(isset($_GET['id'])){ ?>
+  <div class="popup popup--icon -question js_question-popup popup--visible">
+    <div class="popup__background"></div>
+    <div class="popup__content">
+      <h3 class="popup__content__title">
+        Sure
+      </h1>
+      <p>Are You Sure To Delete This Record?</p>
+      <p>
+        <a href="del_user.php?id=<?php echo $_GET['id']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
+        <a href="view_user.php" class="button button--error" data-for="js_success-popup">No</a>
+      </p>
+    </div>
+  </div>
+ <?php } ?>
+
 <!-- delete button AFTER EFFECTS, this is for Success! message, -->
 <?php
   // success message
@@ -223,14 +136,181 @@ if(isset($_GET['id'])){ ?>
 
 
 
-    <script>
-      var addButtonTrigger = function addButtonTrigger(el) {
+<script>
+   var addButtonTrigger = function addButtonTrigger(el) {
         el.addEventListener('click', function () {
           var popupEl = document.querySelector('.' + el.dataset.for);
           popupEl.classList.toggle('popup--visible');
-  });
-};
+        });
+    };
 
-Array.from(document.querySelectorAll('button[data-for]')).
-forEach(addButtonTrigger);
-    </script>
+  Array.from(document.querySelectorAll('button[data-for]')).
+  forEach(addButtonTrigger);
+</script>
+
+
+
+
+
+
+<script>
+    $(function(){
+        var validation_el = $('<div>')
+            validation_el.addClass('validation-err alert alert-danger my-2')
+            validation_el.hide()
+        var contact_exists = false;
+        var email_exists = false;
+        $('input[name="contact"]').on('input',function(){
+            var contact = $(this).val()
+                $(this).removeClass("border-danger border-success")
+                $(this).siblings(".validation-err").remove();
+            var err_el = validation_el.clone()
+
+                if(contact == '')
+                return false;
+
+            function callAjax(contact){
+                if(navigator.onLine){
+                $.ajax({
+                    url:"check_contact.php",
+                    method:'POST',
+                    data:{contact:contact},
+                    dataType:'json',
+                    error: function(jqXHR, textStatus, errorThrown){
+                        console.log(textStatus, errorThrown);
+                        setTimeout(function(){
+                            callAjax(contact);
+                        },3000);
+                        alert("An error occured while validating the data. Please try again later.");
+                    },
+                    success:function(resp){
+                        if(Object.keys(resp).length > 0 && resp.field_name == 'contact'){
+                            err_el.text(resp.msg)
+                            $('input[name="contact"]').addClass('border-danger')
+                            $('input[name="contact"]').after(err_el)
+                            err_el.show('slideDown')
+                            contact_exists = true;
+                            checkSubmit();
+                        }else{
+                            $('input[name="contact"]').addClass('border-success')
+                            contact_exists = false;
+                            checkSubmit();
+                        }
+                    }
+                })
+            }else{
+            alert("No internet connection. Please check your internet connection and try again.");
+            }
+            }callAjax(contact);
+        })
+
+        $('input[name="email"]').on('input',function(){
+            var email = $(this).val()
+                $(this).removeClass("border-danger border-success")
+                $(this).siblings(".validation-err").remove();
+            var err_el = validation_el.clone()
+
+                if(email == '')
+                return false;
+
+            function callAjax(email){
+                if(navigator.onLine){
+                $.ajax({
+                    url:"check_contact.php",
+                    method:'POST',
+                    data:{email:email},
+                    dataType:'json',
+                    error: function(jqXHR, textStatus, errorThrown){
+                        console.log(textStatus, errorThrown);
+                        setTimeout(function(){
+                            callAjax(email);
+                        },3000);
+                        alert("An error occured while validating the data. Please try again later.");
+                    },
+                    success:function(resp){
+                        if(Object.keys(resp).length > 0 && resp.field_name == 'email'){
+                            err_el.text(resp.msg)
+                            $('input[name="email"]').addClass('border-danger')
+                            $('input[name="email"]').after(err_el)
+                            err_el.show('slideDown')
+                            email_exists = true;
+                            checkSubmit();
+                            }else{
+                            $('input[name="email"]').addClass('border-success')
+                            email_exists = false;
+                            checkSubmit();
+                            }
+                            }
+                            })
+                            }else{
+                            alert("No internet connection. Please check your internet connection and try again.");
+                            }
+                            }callAjax(email);
+                            });
+                            function checkSubmit() {
+                            if (contact_exists == false && email_exists == false) {
+                                $('#submit').attr('disabled', false);
+                            } else {
+                                $('#submit').attr('disabled', true);
+                            }
+                        }
+
+          $('input[name="id"]').on('input',function(){
+            var id = $(this).val()
+                $(this).removeClass("border-danger border-success")
+                $(this).siblings(".validation-err").remove();
+            var err_el = validation_el.clone()
+
+                if(id == '')
+                return false;
+
+            function callAjax(id){
+                if(navigator.onLine){
+                  $.ajax({
+                    url:"check_contact.php",
+                    method:'POST',
+                    data:{id:id},
+                    dataType:'json',
+                    error: function(jqXHR, textStatus, errorThrown){
+                        console.log(textStatus, errorThrown);
+                        setTimeout(function(){
+                            callAjax(id);
+                        },3000);
+                        alert("An error occured while validating the data. Please try again later.");
+                    },
+                    success:function(resp){
+                        if(Object.keys(resp).length > 0 && resp.field_name == 'id'){
+                            err_el.text(resp.msg)
+                            $('input[name="id"]').addClass('border-danger')
+                            $('input[name="id"]').after(err_el)
+                            err_el.show('slideDown')
+                            id_exists = true;
+                            checkSubmit();
+                            }else{
+                            $('input[name="id"]').addClass('border-success')
+                            id_exists = false;
+                            checkSubmit();
+                            }
+                            }
+                            })
+                  }else{
+                    alert("No internet connection. Please check your internet connection and try again.");
+                    }
+                    }callAjax(email);
+                    });
+                    function checkSubmit() {
+                    if (contact_exists == false && email_exists == false) {
+                        $('#submit').attr('disabled', false);
+                    } else {
+                        $('#submit').attr('disabled', true);
+                    }
+            }
+});
+</script>
+
+<script>$(document).ajaxError(function(event, jqxhr, settings, thrownError) {
+    console.log(thrownError);
+    // alert("An error occured while processing your request. Please try again later.");
+});
+
+</script>

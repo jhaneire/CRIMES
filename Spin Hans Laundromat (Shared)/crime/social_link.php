@@ -41,7 +41,7 @@
     </style>
         <div class="social-icon-bar">
   <!--<a href="#" class="website" target="_blank"><i class="fa fa-globe"></i></a> -->
-  <a href="https://www.facebook.com/spinhanslaundromat" class="facebook" target="_blank"><i class="fa fa-facebook"></i></a> 
+  <a href="https://www.facebook.com/" class="facebook" target="_blank"><i class="fa fa-facebook"></i></a> 
   <!--<a href="#" class="twitter" target="_blank"><i class="fa fa-whatsapp"></i></a> 
   <a href="#" class="youtube" target="_blank"><i class="fa fa-youtube"></i></a> -->
 </div>

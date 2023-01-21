@@ -1,23 +1,81 @@
-<?php session_start();?>
-<?php include('head.php');?>
-<link rel="stylesheet" href="popup_style.css">
+<?php session_start();
+if(isset($_SESSION['email'])){
+    //email is in session, push through
+    header("Location: index.php");
+    exit;
+  }
+  ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime and Incident Reporting</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/app.js" defer></script>
+</head>
+<body>
 
-   <?php
-  include('connect.php');
-if(isset($_POST['btn_login'])){
-$unm = $_POST['email'];
-//echo $_POST['passwd'];
-//$p="admin";
-$passw = hash('sha256', $_POST['password']);
-//$passw = hash('sha256',$p);
-//echo $passw;exit;
-function createSalt()
-{
-    return '2123293dsj2hu2nikhiljdsd';
-}
-$salt = createSalt();
-$pass = hash('sha256', $salt . $passw);
-//echo $pass;
+    <div class="portal">
+        <div class="portal__wrapper">
+            <form  method="POST" action="#" class="portal__wrapper__form">
+                <div class="portal__wrapper__form__wrapper">
+                    <div class="portal__wrapper__form__wrapper__title">
+                        <h1><span>PLMUN</span> SYSTEM</h1>
+                        <p>Sign in to start your session</p>
+                    </div>
+                    <div class="portal__wrapper__form__wrapper__field">
+                        <div class="portal__wrapper__form__wrapper__field__input">
+                            <input type="email" name="email" id="email" class="js-input"  required="">
+                            <label for="studno">Email</label>
+                        </div>
+                        <div class="portal__wrapper__form__wrapper__field__input">
+                            <input type="password" name="password" id="password" class="js-input js-pass" required="">
+                            <label for="acode">Password</label>
+                            <img id="show-hide-pass" src="assets/showPass.svg" alt="">
+                            <a href="#" id="forgot-pass">Forgot Password?</a>
+                        </div>
+                        <div class="portal__wrapper__form__wrapper__field__input">
+                            <input type="text" id="captcha" class="js-input"  required="">
+                            <label for="captcha">Antibot Validation</label>
+                            <img id="captcha-img" src="https://www.ue.edu.ph/portals/sp/c3po/" alt="">
+                        </div>
+                        <p>Don't have account ? <a href="signup.php"> Sign Up Here</a></p>
+                        <div class="portal__wrapper__form__wrapper__field__button">
+                            <button type="submit" name="btn_login">Sign in</button>
+                        </div>
+                        <p id="terms">By using this service, you understood and agree to the researchers <a href="#">Terms of Use</a> and <a href="#">Privacy Statement</a>.</p>
+                    </div>
+                </div>
+            </form>
+            <div class="portal__wrapper__hero">
+                <img src="assets/plmunlogo.webp" alt="">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<link rel="stylesheet" href="popup_style.css">
+<?php include('connect.php');
+    if(isset($_POST['btn_login'])){
+    $unm = $_POST['email'];
+    //echo $_POST['passwd'];
+    //$p="admin";
+    $passw = hash('sha256', $_POST['password']);
+    //$passw = hash('sha256',$p);
+    //echo $passw;exit;
+    function createSalt()
+    {
+        return '2123293dsj2hu2nikhiljdsd';
+    }
+    $salt = createSalt();
+    $pass = hash('sha256', $salt . $passw);
+    //echo $pass;
+
     $sql = "SELECT * FROM admin WHERE email='" .$unm . "' and password = '". $pass."'";
     $result = mysqli_query($conn,$sql);
     $count=mysqli_num_rows($result);
@@ -26,99 +84,34 @@ $pass = hash('sha256', $salt . $passw);
       // Save user data in session variables
       $_SESSION["id"] = $row['id'];
       $_SESSION["username"] = $row['username'];
+      $_SESSION["fname"] = $row['fname'];
+      $_SESSION["contact"] = $row['contact'];
       $_SESSION["password"] = $row['password'];
       $_SESSION["email"] = $row['email'];
-      $_SESSION["fname"] = $row['fname'];
-      if ($row['group_id'] == 1 || $row['group_id'] == 2 || $row['group_id'] == 3) {
+      $_SESSION["group_id"] = $row['group_id'];
         // Redirect to dashboard page
         echo '<div class="popup popup--icon -success js_success-popup popup--visible">';
         echo '<div class="popup__background"></div>';
         echo '<div class="popup__content">';
         echo '<h3 class="popup__content__title">success</h1>';
         echo '<p>Login Successfully</p>';
-        echo '<script type="text/javascript">window.location="index.php";</script>';
-      } else {
-        // Redirect to another page
-        header('Location: report.php');
-      }
+        echo '<script type="text/javascript">setTimeout(function(){window.location="index.php";}, 1500);</script>';
+        // echo '<p>';
+        // echo '<a href="index.php"><button class="button button--success" data-for="js_success-popup">Login Successfully</button></a>';
+        // echo '</p>';
     } else {
-      // Login failed
-      // Show an error message or redirect to the login page
-      echo '<div class="popup popup--icon -error js_error-popup popup--visible">';
-      echo '<div class="popup__background"></div>';
-      echo '<div class="popup__content">';
-      echo '<h3 class="popup__content__title">Error</h1>';
-      echo '<p>Invalid Email or Password</p>';
-      echo '<p>';
-      echo '<a href="login.php"><button class="button button--error" data-for="js_error-popup">Close</button></a>';
-      echo '</p>';
-      echo '</div>';
-      echo '</div>';
-    } 
+        // Redirect to another page
+        echo '<div class="popup popup--icon -error js_error-popup popup--visible">';
+        echo '<div class="popup__background"></div>';
+        echo '<div class="popup__content">';
+        echo '<h3 class="popup__content__title">Error</h1>';
+        echo '<p>Invalid Email or Password</p>';
+        echo '<p>';
+        echo '<a href="login.php"><button class="button button--error" data-for="js_error-popup">Close</button></a>';
+        echo '</p>';
+        echo '</div>';
+        echo '</div>';
+        // header('Location: ../report.php');
+      }
+
 }?>
-    <!-- Main wrapper  -->
-    <div id="main-wrapper">
-        <div class="unix-login">
-             <?php
-             $sql_login = "select * from manage_website"; 
-             $result_login = $conn->query($sql_login);
-             $row_login = mysqli_fetch_array($result_login);
-             ?>
-            <div class="container-fluid" style="background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('uploadImage/Logo/<?php echo $row_login['background_login_image'];?>');
- ">
-                <div class="row justify-content-center">
-                    <div class="col-lg-4">
-                        <div class="login-content card">
-                            <div class="login-form">
-                                <!-- <center><img src="uploadImage/Logo/<?php echo $row_login['login_logo'];?>" style="width:50%; border-radius: 10px; "></center><br> -->
-                                <h4>ACCOUNT LOGIN</h4>
-                                <form method="POST">
-                               <div class="form-group">
-                                        <label>Email address</label>
-                                        <input type="email" name="email" class="form-control" placeholder="Email" required="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Password</label>
-                                        <input type="password" name="password" class="form-control" placeholder="Password" required="">
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                                <input type="checkbox"> Remember Me
-                                            </label>
-                                            <!--
-                                           <label class="pull-right">
-                                                <a href="forgot_password.php">Forgotten Password?</a>
-                                           </label>   -->
-                                    </div>
-                                    <button type="submit" name="btn_login" class="btn btn-primary btn-flat m-b-30 m-t-30">Login</button>
-                                  <!--   <div class="register-link m-t-15 text-center">
-                                        <p>Don't have account ? <a href="#"> Sign Up Here</a></p>
-                                    </div> -->
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-	
-    <!-- End Wrapper -->
-    <!-- All Jquery -->
-    <script src="js/lib/jquery/jquery.min.js"></>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="js/lib/bootstrap/js/popper.min.js"></script>
-    <script src="js/lib/bootstrap/js/bootstrap.min.js"></script>
-    <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="js/jquery.slimscroll.js"></script>
-    <!--Menu sidebar -->
-    <script src="js/sidebarmenu.js"></script>
-    <!--stickey kit -->
-    <script src="js/lib/sticky-kit-master/dist/sticky-kit.min.js"></script>
-    <!--Custom JavaScript -->
-    <script src="js/custom.min.js"></script>
-
-</body>
-
-</html>

@@ -1,6 +1,5 @@
 
 <?php include('head.php');?>
-
 <?php include('header.php');?>
 <?php include('sidebar.php');?>
 
@@ -44,7 +43,7 @@
                                                 <div class="row">
                                                     <label class="col-sm-3 control-label">FullName</label> 
                                                     <div class="col-sm-9">
-                                                    <input type="text" name="fname" class="form-control" placeholder="Full Name" id="event"  required="">
+                                                    <input type="text" name="fname" class="form-control" placeholder="Full Name" id="fname"  required="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -59,7 +58,7 @@
                                                 
                                             </div>
                                             </div>
-                                            <p id="error" class="text-danger"></p>
+                                            <!-- <p id="error" class="text-danger"></p> -->
                                             <div class="form-group">
                                                 <div class="row">
                                                     <label class="col-sm-3 control-label">Email</label>
@@ -146,6 +145,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                </div>
                 </div>
                 <!-- /# row -->
                 <!-- End PAge Content -->
@@ -258,7 +259,8 @@
 });
 </script>
 
-<script>$(document).ajaxError(function(event, jqxhr, settings, thrownError) {
+<script>
+$(document).ajaxError(function(event, jqxhr, settings, thrownError) {
     console.log(thrownError);
     // alert("An error occured while processing your request. Please try again later.");
 });

@@ -1,6 +1,6 @@
 <?php include('head.php');?>
 <?php include('header.php');?>
-<?php include('sidebar.php');
+<?php 
   if(isset($_GET['id']))
   { ?>
     <div class="popup popup--icon -question js_question-popup popup--visible">
@@ -18,107 +18,127 @@
         </div>
     </div>
 <?php } ?>
+<?php
+$status = isset($_GET['status']) ? $_GET['status'] : '';
+$stat_arr = ['Pending Requests', 'Complaint under review and confirmation', 'Complaint currently being resolved/forwarded to police', 'Completed'];
+?>
+
 
 
 
 <!-- Page wrapper  -->
 <div class="page-wrapper">
-  <!-- Bread crumb -->
-  <div class="row page-titles">
-    <div class="col-md-5 align-self-center">
-      <h3 class="text-primary"> Cases List</h3> 
+  <?php include('sidebar.php');?>
+    <!-- Bread crumb -->
+    <div class="page-titles">
+      <div class="col-md-5 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="breadcrumb-item active">Case Management</li>
+        <li class="breadcrumb-item active">viewing</li>
+      </ol>
+          <h3 class="text-primary"> Cases List</h3> 
+      </div>
+          <!-- <div class="col-md-7 align-self-center"> -->
     </div>
-        <div class="col-md-7 align-self-center">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-            <li class="breadcrumb-item active">Case Management</li>
-          </ol>
-        </div>
-  </div>
-    <!-- End Bread crumb -->
-    <!-- Container fluid  -->
-    <div class="container-fluid-3">
-      <!-- Start Page Content -->
-      <!-- /# row -->
-      <div class="card-3">
-        <div class="card-body">
-	        <?php if(isset($useroles)){  if(in_array("add_order",$useroles)){ ?> 
-            <a href="add_order.php"><button class="btn btn-primary">Add Laundry</button></a>
-            <a href="receipt.php"><button class="btn btn-primary">Print Receipt</button></a>
-          <?php } } ?>
-          <div class="table-responsive m-t-40">
-            <table id="myTable" class="table table-bordered table-striped"  data-toggle="table" >
-              <thead>
-                <tr>
-                  <th>	Reporter Role</th>
-                  <th>	CASE NO.</th>
-                  <th>	Complainant Name</th>
-                  <th>	Contact (No. & Email)</th>
-                  <th>	Location</th>
-                  <th>	Barangay</th>
-                  <th>	Type of Report|Complaint|Case	</th>
-                  <th>	Description</th>
-                  <th>	Date Filed</th>
-                  <th>	Status</th>
-                  <th>	Action</th>
 
-                  
-                  
-                </tr>
-              </thead>
-              <tbody>
-                <?php include 'connect.php';
-                  $sql = "SELECT * FROM `cases`";
-                  $result = $conn->query($sql);
-                    while($row = $result->fetch_assoc())
-                    {
-                      // $sql1 = "SELECT * FROM `service` where id='".$row['sname']."'" ;
-                      // $sql1 = "SELECT * FROM `service` where id='".$row['sname']."'" ;
-                      // $result1 = $conn->query($sql1);
-                      // $row1 = $result1->fetch_assoc();
-                      $sql2 = "SELECT * FROM `cases` where id='".$row['fname']."'";
-                      $result2 = $conn->query($sql2);
-                      $row2 = $result2->fetch_assoc();
-                ?>
+
+
+
+ <!-- End Bread crumb -->
+  <!-- Container fluid  -->
+  <div class="container-fluid-3">
+    <!-- Start Page Content -->
+     <!-- /# row -->
+     <div class="card-3">
+      <div class="card-body">
+        <div class="table-responsive m-t-40">
+          <table id="myTable" class="table table-bordered table-striped"  data-toggle="table" >
+            <thead>
+              <tr>
+                <th>	CASE NO.</th>
+                <th>	Complainant Name</th>
+                <th>	Contact (No. & Email)</th>
+                <th>	Location</th>
+                <th>	Barangay</th>
+                <th>	Type of Report|Complaint|Case	</th>
+                <th>	Witnesses</th>
+                <th>	Details | Description</th>
+                
+                <th>	Date Filed</th>
+                <th>	Status</th>
+                <th>	Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php include ('connect.php');
+                $where = "";
+                switch($status){
+                  case 0:
+                      $where = " where `status` = 0 ";
+                      break;
+                  case 1:
+                      $where = " where `status` = 1 ";
+                      break;
+                  case 2:
+                      $where = " where `status` = 2 ";
+                      break;
+                  case 3:
+                      $where = " where `status` = 3 ";
+                      break;
+                  default:
+                      $where = "";
+              }
+              $sql = "SELECT * FROM cases" . $where . " ORDER BY abs(unix_timestamp(datetime)) DESC";
+              $result = mysqli_query($conn, $sql);
+              if($result === false) {
+                die("Error: Failed to execute query. " . mysqli_error($conn));
+              }
+                if(mysqli_num_rows($result) > 0) {
+                  while($row = mysqli_fetch_assoc($result)) {
+                      // check the date dataypes!
+                      $datetime = $row['datetime'];
+                      // var_dump($datetime);
+                      ?>
                       <tr>
-                        <td><?php echo $row['fname']; ?></td><!-- this must check the admin for the group_id then check the id to what position -->
-                        <td>0<?php echo $row['id']; ?></td> <!-- salt+id -->
-                        <td><?php echo $row['fname']; ?></td> 
-                        <td><?php echo $row['contact']; ?></td> <!-- this must check the admin for the account id then check the contact <td><?php echo $row['email']; ?></td> -->
+                        <td><?php echo $row['case_no']; ?></td>
+                        <td><?php echo $row['fname']; ?></td>
+                        <td><?php echo $row['contact'].' & '.$row['email']; ?>
                         <td><?php echo $row['location']; ?></td>
                         <td><?php echo $row['barangay']; ?></td>
                         <td><?php echo $row['type']; ?></td>
+                        <td><?php echo $row['witnesses']; ?></td>
                         <td><?php echo $row['description']; ?></td>
-                        <td><?php echo $row['date']; ?></td>
-                        
+                        <td><?php echo $row['datetime'] ; ?></td>
                         <!--STATUS-->
-                        <?php 
-                          if ($row['delivery_status']==0) { ?>
-                            <td>Pending</td>
-                        <?php }
-                          else{ ?>
-                          <td>Completed</td>
-                        <?php }?>
+                        <td><?php echo $stat_arr[$row['status']]; ?></td>
                         <td>
-                          <?php if ($row['delivery_status']==0) {?>
-                            <a href="complete_order.php?id=<?=$row['id'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-exchange"></i></button></a>
-                          <?php }?>
-
-                          <?php if(isset($useroles)){  if(in_array("edit_order",$useroles)){ ?> 
-                            <a href="edit_order.php?id=<?=$row['id'];?>"><button type="button" class="btn btn-xs btn-primary" ><i class="fa fa-pencil"></i></button></a>
-                          <?php } } ?>
-
-                          <?php if(isset($useroles)){  if(in_array("delete_order",$useroles)){ ?> 
-                            <a href="view_order.php?id=<?=$row['id'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-trash"></i></button></a>
-                          <?php } } ?>
-                          <!-- <a href="assign_role.php?id=<?=$row['id'];?>"><button type="button" class="btn btn-xs btn-danger" ><i class="fa fa-pay"></i></button></a> -->
+                        <a href="update_order.php?id=<?php echo $row['id']; ?>">
+                          <button class="btn btn-warning">
+                          <i class="fa fa-edit"></i>
+                          </button>
+                        </a>
+                          <a href="view_order.php?id=<?php echo $row['id']; ?>">
+                            <button class="btn btn-danger">
+                            <i class="fa fa-trash"></i>
+                            </button>
+                          </a>
                         </td>
                       </tr>
-                    <?php } ?>
-              </tbody>
-            </table>
+                  <?php }
+                }else {
+                  echo "No orders found.";
+                }
+                ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
 
-
+<?php include('footer.php');?>
 
   <script>
   $(document).ready(function() {
@@ -142,13 +162,10 @@
   });
 </script>
 
-</div>
-</div>
-</div>
-<?php include('footer.php');?>
 
 
-<link rel="stylesheet" href="popup_style.css">
+
+
 <?php if(!empty($_SESSION['success'])) {  ?>
 <div class="popup popup--icon -success js_success-popup popup--visible">
 <div class="popup__background"></div>
@@ -164,6 +181,8 @@ Success
 </div>
 <?php unset($_SESSION["success"]);  
 } ?>
+
+
 <?php if(!empty($_SESSION['error'])) {  ?>
 <div class="popup popup--icon -error js_error-popup popup--visible">
 <div class="popup__background"></div>
