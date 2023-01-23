@@ -1,7 +1,6 @@
 
 <?php include('head.php');?>
 <?php include('header.php');?>
-<?php include('sidebar.php');?>
 
  <?php
  include('connect.php');
@@ -9,30 +8,30 @@
  $current_date = date('Y-m-d');
 
 ?>
-  <!-- Page wrapper  -->
-        <div class="page-wrapper">
-            <!-- Bread crumb -->
-            <div class="row page-titles">
-                <div class="col-md-5 align-self-center">
-                    <h3 class="text-primary">User Management</h3> </div>
-                <div class="col-md-7 align-self-center">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                        <li class="breadcrumb-item active">User Management</li>
-                        <!-- <li class="breadcrumb-item active">Add User</li> -->
-                    </ol>
-                </div>
-            </div>
-            <!-- End Bread crumb -->
-            <!-- Container fluid  -->
+<!-- Page wrapper  -->
+<div class="page-wrapper">
+  <?php include('sidebar.php');?>
+    <!-- Bread crumb -->
+    <div class="page-titles">
+      <div class="col-md-5 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="view_user.php">Home</a></li>
+        <li class="breadcrumb-item active">User Management</li>
+        <li class="breadcrumb-item active">Add user</li>
+      </ol>
+          <h3 class="text-primary">User Registration</h3> 
+      </div>
+          <!-- <div class="col-md-7 align-self-center"> -->
+    </div>
+
             <div class="container-fluid-2">
                 <!-- Start Page Content -->
                 
                 <!-- /# row -->
                 <div class="row">
-                    <div class="col-lg-8" style="    margin-left: 10%;">
+                    <div class="col-lg-8">
                         <div class="card-2">
-                            <div class="card-title">
+                            <div class="card-title"> <h2><br><br><center>Create Account<br><br></h2></center>
                             </div>
                             <div class="card-body">
                                 <div class="input-states">

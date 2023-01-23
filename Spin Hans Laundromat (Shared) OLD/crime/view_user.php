@@ -1,29 +1,31 @@
 
 <?php include('head.php');?>
 <?php include('header.php');?>
-<?php include('sidebar.php'); ?>
+
+
 
 
 
 
 <!-- Page wrapper  -->
-<div class="page-wrapper"><!-- Bread crumb -->
-  <div class="row page-titles">
-    <div class="col-md-5 align-self-center">
-      <h3 class="text-primary"> View Users</h3> 
-    </div>
-    <div class="col-md-7 align-self-center">
+<div class="page-wrapper">
+  <?php include('sidebar.php');?>
+    <!-- Bread crumb -->
+    <div class="page-titles">
+      <div class="col-md-5 align-self-center">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
         <li class="breadcrumb-item active">Registration</li>
-        <li class="breadcrumb-item active">User management</li>
+        <li class="breadcrumb-item active">viewing</li>
       </ol>
+          <h3 class="text-primary"> User Management</h3> 
+      </div>
+          <!-- <div class="col-md-7 align-self-center"> -->
     </div>
-  </div>
       <!-- End Bread crumb --><!-- Container fluid  -->
-      <div class="container-fluid-2">
+      <div class="container-fluid-user">
           <!-- Start Page Content --><!-- /# row -->
-          <div class="card-2">
+          <div class="card-4">
               <div class="card-body">
                 <?php if(isset($useroles)){  if(in_array("add_user",$useroles)){ ?> 
                     <a href="add_user.php"><button class="btn btn-primary">Add User</button></a>

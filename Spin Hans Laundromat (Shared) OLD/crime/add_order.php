@@ -27,9 +27,9 @@
         <!-- Start Page Content -->
         <!-- /# row -->
         
-          
+        
             <div class="card-2">
-              <div class="card-title"> <h2><br><br><center>Report the Crime/Incident<br><br></h2></center></div>
+              <div class="card-title"> <h2><br><br><center>Fill up the form<br><br></h2></center></div>
                 <div class="card-body">
                   <div class="input-states">
                     <form class="form-horizontal" method="POST" action="pages/save_order.php" name="btn_save" id="myform" enctype="multipart/form-data">

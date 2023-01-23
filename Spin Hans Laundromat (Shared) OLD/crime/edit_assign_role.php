@@ -1,7 +1,7 @@
 <?php include('head.php');?>
 <?php include('header.php');?>
 
-<?php include('sidebar.php');?>   
+
 <?php //echo  $_SESSION["email"];
 include('connect.php');
 date_default_timezone_set('Asia/Kolkata');
@@ -38,21 +38,22 @@ window.location="view_role.php";
 ?>   
 <!-- Page wrapper  -->
 <div class="page-wrapper">
-<!-- Bread crumb -->
-<div class="row page-titles">
-<div class="col-md-5 align-self-center">
-<h3 class="text-primary">Dashboard</h3> </div>
-<div class="col-md-7 align-self-center">
-<ol class="breadcrumb">
-<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-<li class="breadcrumb-item active">Dashboard</li>
-</ol>
-</div>
-</div>
-<!-- End Bread crumb -->
-<!-- Container fluid  -->
-<div class="container-fluid">
+  <?php include('sidebar.php');?>
+    <!-- Bread crumb -->
+    <div class="page-titles">
+      <div class="col-md-5 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="view_user.php">Home</a></li>
+        <li class="breadcrumb-item active">Edit role</li>
+      </ol>
+          <h3 class="text-primary">Role Management</h3> 
+      </div>
+          <!-- <div class="col-md-7 align-self-center"> -->
+    </div>
+<div class="container-fluid-user">
 <!-- Start Page Content -->
+                <div class="card-4">
+                <div class="card-title"> <h2><br><br><center>Edit permission<br><br></h2></center></div>
 
 
 
@@ -78,11 +79,12 @@ $description =  $row1['description'];
 
 
 <div class="form-group">
-<u><h3 style="margin-left: 3%;">Permissions</h3></u> 
-<h5 style="color:red;">( While selecting any sub roles like add,edit,delete you must require to select Main roles named with Manage Name. )</h5>    
-<br><br>  
+    <u><h3 style="margin-left: 3%;">Permissions</h3></u> 
+    <h5 style="color:red;">( While selecting any sub roles like add,edit,delete you must require to select Main roles named with Manage Name. )</h5>    
 </div>
-<div class="row"> 
+
+
+<div class="listed"> 
 
 <?php 
 $q ="SELECT * FROM  tbl_permission ";
@@ -125,6 +127,8 @@ echo "checked";
 </div>
 <!-- End PAge Content -->
 </div>
+ </div>
+            </div><!-- End PAge Content -->
 <!-- End Container fluid  -->
 <?php include('footer.php');?>
 

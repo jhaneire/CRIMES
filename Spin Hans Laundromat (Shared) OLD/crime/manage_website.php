@@ -1,7 +1,7 @@
 
 <?php include('head.php');?>
 <?php include('header.php');?>
-<?php include('sidebar.php');?>
+
 
  <?php
  include('connect.php');
@@ -116,28 +116,29 @@ while($row=mysqli_fetch_array($query))
    
 ?> 
 
-  <!-- Page wrapper  -->
-        <div class="page-wrapper">
-            <!-- Bread crumb -->
-            <div class="row page-titles">
-                <div class="col-md-5 align-self-center">
-                    <h3 class="text-primary">Website Management</h3> </div>
-                <div class="col-md-7 align-self-center">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                        <li class="breadcrumb-item active">Website Management</li>
-                    </ol>
-                </div>
-            </div>
-            <!-- End Bread crumb -->
-            <!-- Container fluid  -->
+
+<!-- Page wrapper  -->
+<div class="page-wrapper">
+  <?php include('sidebar.php');?>
+    <!-- Bread crumb -->
+    <div class="page-titles">
+      <div class="col-md-5 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="view_user.php">Home</a></li>
+        <li class="breadcrumb-item active">Website Management</li>
+        <li class="breadcrumb-item active">Add user</li>
+      </ol>
+          <h3 class="text-primary">Website Management</h3> 
+      </div>
+          <!-- <div class="col-md-7 align-self-center"> -->
+    </div>
             <div class="container-fluid-2">
                 <!-- Start Page Content -->
                 
                 <!-- /# row -->
                 <div class="row">
                     <div class="col-lg-8" style="    margin-left: 10%;">
-                        <div class="card-2">
+                        <div class="card-4">
                             <div class="card-title">
                                
                             </div>
@@ -257,6 +258,7 @@ while($row=mysqli_fetch_array($query))
                         </div>
                     </div>
                   
+                </div>
                 </div>
                 
                

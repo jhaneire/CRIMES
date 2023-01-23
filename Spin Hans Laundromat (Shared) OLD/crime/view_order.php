@@ -1,7 +1,7 @@
 <?php include('head.php');?>
 <?php include('header.php');?>
 <?php 
-  if(isset($_GET['id']))
+  if(isset($_GET['case_no']))
   { ?>
     <div class="popup popup--icon -question js_question-popup popup--visible">
       <div class="popup__background">
@@ -12,7 +12,7 @@
           </h1>
             <p>Are You Sure To Delete This Record?</p>
             <p>
-              <a href="del_order.php?id=<?php echo $_GET['id']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
+              <a href="del_order.php?case_no=<?php echo $_GET['case_no']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
               <a href="view_order.php" class="button button--error" data-for="js_success-popup">No</a>
             </p>
         </div>
@@ -20,7 +20,7 @@
 <?php } ?>
 <?php
 $status = isset($_GET['status']) ? $_GET['status'] : '';
-$stat_arr = ['Pending Requests', 'Complaint under review and confirmation', 'Complaint currently being resolved/forwarded to police', 'Completed'];
+$stat_arr = ['Pending Requests', 'Complaint under review and confirmation', 'Complaint currently being resolved/forwarded to police', 'Completed', 'N/A'];
 ?>
 
 
@@ -47,13 +47,28 @@ $stat_arr = ['Pending Requests', 'Complaint under review and confirmation', 'Com
 
  <!-- End Bread crumb -->
   <!-- Container fluid  -->
-  <div class="container-fluid-3">
+  <div class="container-fluid-user">
     <!-- Start Page Content -->
      <!-- /# row -->
-     <div class="card-3">
+     <div class="card-4">
       <div class="card-body">
+        <?php if(isset($useroles)){  if(in_array("add_order",$useroles)){ ?> 
+                    <a href="add_order.php"><button class="btn btn-primary">File report</button></a>
+        <?php } } ?>
         <div class="table-responsive m-t-40">
           <table id="myTable" class="table table-bordered table-striped"  data-toggle="table" >
+            <colgroup>
+            <col width="5%">
+            <col width="5%">
+            <col width="10%">
+            <col width="20%">
+            <col width="5%">
+            <col width="7%">
+            <col width="5%">
+            <col width="15%">
+            <col width="15%">
+          
+            </colgroup>
             <thead>
               <tr>
                 <th>	CASE NO.</th>
@@ -61,7 +76,7 @@ $stat_arr = ['Pending Requests', 'Complaint under review and confirmation', 'Com
                 <th>	Contact (No. & Email)</th>
                 <th>	Location</th>
                 <th>	Barangay</th>
-                <th>	Type of Report|Complaint|Case	</th>
+                <th>	Report | Cases	</th>
                 <th>	Witnesses</th>
                 <th>	Details | Description</th>
                 
@@ -89,7 +104,7 @@ $stat_arr = ['Pending Requests', 'Complaint under review and confirmation', 'Com
                   default:
                       $where = "";
               }
-              $sql = "SELECT * FROM cases" . $where . " ORDER BY abs(unix_timestamp(datetime)) DESC";
+              $sql = "SELECT * FROM cases" . $where . " ORDER BY datetime ASC";
               $result = mysqli_query($conn, $sql);
               if($result === false) {
                 die("Error: Failed to execute query. " . mysqli_error($conn));
@@ -100,31 +115,50 @@ $stat_arr = ['Pending Requests', 'Complaint under review and confirmation', 'Com
                       $datetime = $row['datetime'];
                       // var_dump($datetime);
                       ?>
-                      <tr>
-                        <td><?php echo $row['case_no']; ?></td>
-                        <td><?php echo $row['fname']; ?></td>
-                        <td><?php echo $row['contact'].' & '.$row['email']; ?>
-                        <td><?php echo $row['location']; ?></td>
-                        <td><?php echo $row['barangay']; ?></td>
-                        <td><?php echo $row['type']; ?></td>
-                        <td><?php echo $row['witnesses']; ?></td>
-                        <td><?php echo $row['description']; ?></td>
-                        <td><?php echo $row['datetime'] ; ?></td>
-                        <!--STATUS-->
-                        <td><?php echo $stat_arr[$row['status']]; ?></td>
-                        <td>
-                        <a href="update_order.php?id=<?php echo $row['id']; ?>">
-                          <button class="btn btn-warning">
-                          <i class="fa fa-edit"></i>
-                          </button>
-                        </a>
-                          <a href="view_order.php?id=<?php echo $row['id']; ?>">
-                            <button class="btn btn-danger">
-                            <i class="fa fa-trash"></i>
+                      <?php if($_SESSION['username'] == 'admin'){
+                      ?>
+                        <tr>
+                          <td><?php echo $row['case_no']; ?></td>
+                          <td><?php echo $row['fname']; ?></td>
+                          <td><?php echo $row['contact'].' & '.$row['email']; ?>
+                          <td><?php echo $row['location']; ?></td>
+                          <td><?php echo $row['barangay']; ?></td>
+                          <td><?php echo $row['type']; ?></td>
+                          <td><?php echo $row['witnesses']; ?></td>
+                          <td><?php echo $row['description']; ?></td>
+                          <td><?php echo $row['datetime'] ; ?></td>
+                          <!--STATUS-->
+                          <td><?php echo $stat_arr[$row['status']]; ?></td>
+                          <td>
+                          <a href="update_order.php?id=<?php echo $row['id']; ?>">
+                            <button class="btn btn-warning">
+                            <i class="fa fa-edit"></i>
                             </button>
                           </a>
-                        </td>
-                      </tr>
+                            <a href="view_order.php?case_no=<?php echo $row['case_no']; ?>">
+                              <button class="btn btn-danger">
+                              <i class="fa fa-trash"></i>
+                              </button>
+                            </a>
+                          </td>
+                        </tr>
+                        <?php 
+                      }elseif($_SESSION['id'] == $row['id']){
+                        echo "<tr>";
+                        echo "<td>" . $row['case_no'] . "</td>";
+                        echo "<td>" . $row['fname'] . "</td>";
+                        echo "<td>" . $row['contact'].' & '.$row['email'] . "</td>";
+                        echo "<td>" . $row['location'] . "</td>";
+                        echo "<td>" . $row['barangay'] . "</td>";
+                        echo "<td>" . $row['type'] . "</td>";
+                        echo "<td>" . $row['witnesses'] . "</td>";
+                        echo "<td>" . $row['description'] . "</td>";
+                        echo "<td>" . $row['datetime'] . "</td>";
+                        echo "<td>" . $stat_arr[$row['status']] . "</td>";
+                        echo "<td>" . "</td>";
+
+                        echo "</tr>";
+                      } ?>
                   <?php }
                 }else {
                   echo "No orders found.";

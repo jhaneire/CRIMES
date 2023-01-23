@@ -93,8 +93,8 @@ if(isset($_SESSION['email'])){
         echo '<div class="popup popup--icon -success js_success-popup popup--visible">';
         echo '<div class="popup__background"></div>';
         echo '<div class="popup__content">';
-        echo '<h3 class="popup__content__title">success</h1>';
-        echo '<p>Login Successfully</p>';
+        echo '<h3 class="popup__content__title">SUCCESS</h1>';
+        echo '<p>Login Successful</p>';
         echo '<script type="text/javascript">setTimeout(function(){window.location="index.php";}, 1500);</script>';
         // echo '<p>';
         // echo '<a href="index.php"><button class="button button--success" data-for="js_success-popup">Login Successfully</button></a>';
